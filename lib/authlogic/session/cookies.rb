@@ -47,6 +47,18 @@ module Authlogic
           rw_config(:remember_me_for, value, 3.months, :_read)
         end
         alias_method :remember_me_for=, :remember_me_for
+
+        def secure(value = nil)
+          rw_config(:secure, value, false)
+        end
+
+        # Should the cookie be signed? If the controller adapter supports it, this is a measure against cookie tampering.
+        def sign_cookie(value = nil)
+          if value && !controller.cookies.respond_to?(:signed)
+            raise "Signed cookies not supported with #{controller.class}!"
+          end
+          rw_config(:sign_cookie, value, false)
+        end
       end
 
       # The methods available for an Authlogic::Session::Base object that make up the cookie feature set.
@@ -73,18 +85,6 @@ module Authlogic
         # Accepts a boolean as a flag to remember the session or not. Basically to expire the cookie at the end of the session or keep it for "remember_me_until".
         def remember_me=(value)
           @remember_me = value
-        end
-
-        # Should the cookie be signed? If the controller adapter supports it, this is a measure against cookie tampering.
-        def sign_cookie(value = nil)
-          if value && !controller.cookies.respond_to?(:signed)
-            raise "Signed cookies not supported with #{controller.class}!"
-          end
-          rw_config(:sign_cookie, value, false)
-        end
-
-        def secure(value = nil)
-          rw_config(:secure, value, false)
         end
 
         alias_method :sign_cookie=, :sign_cookie
