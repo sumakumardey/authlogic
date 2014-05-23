@@ -51,6 +51,7 @@ module Authlogic
         def secure(value = nil)
           rw_config(:secure, value, false)
         end
+        alias_method :secure=, :secure
 
         # Should the cookie be signed? If the controller adapter supports it, this is a measure against cookie tampering.
         def sign_cookie(value = nil)
