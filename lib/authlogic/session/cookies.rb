@@ -59,6 +59,7 @@ module Authlogic
           end
           rw_config(:sign_cookie, value, false)
         end
+        alias_method :sign_cookie=, :sign_cookie
       end
 
       # The methods available for an Authlogic::Session::Base object that make up the cookie feature set.
@@ -87,7 +88,6 @@ module Authlogic
           @remember_me = value
         end
 
-        alias_method :sign_cookie=, :sign_cookie
         # See remember_me
         def remember_me?
           remember_me == true || remember_me == "true" || remember_me == "1"
