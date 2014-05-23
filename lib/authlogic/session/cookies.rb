@@ -61,6 +61,12 @@ module Authlogic
           rw_config(:sign_cookie, value, false)
         end
         alias_method :sign_cookie=, :sign_cookie
+
+        def httponly(value = nil)
+          rw_config(:httponly, value, false)
+        end
+        alias_method :httponly=, :httponly
+        
       end
 
       # The methods available for an Authlogic::Session::Base object that make up the cookie feature set.
@@ -133,7 +139,7 @@ module Authlogic
             controller.cookies[cookie_key] && controller.cookies[cookie_key].split("::")
           end
         end
-        
+
         def secure
           return @secure if defined?(@secure)
           @secure = self.class.secure
@@ -170,6 +176,21 @@ module Authlogic
           else
             controller.cookies[cookie_key] = cookie
           end
+        end
+
+        def httponly
+          return @httponly if defined?(@httponly)
+          @httponly = self.class.httponly
+        end
+
+        # Accepts a boolean as to whether the cookie should be marked as httponly.  If true, the cookie will not be accessable from javascript
+        def httponly=(value)
+          @httponly = value
+        end
+
+        # See httponly
+        def httponly?
+          httponly == true || httponly == "true" || httponly == "1"
         end
 
         def destroy_cookie
