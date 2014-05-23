@@ -133,6 +133,16 @@ module Authlogic
             controller.cookies[cookie_key] && controller.cookies[cookie_key].split("::")
           end
         end
+        
+        def secure
+          return @secure if defined?(@secure)
+          @secure = self.class.secure
+        end
+
+        # Accepts a boolean as to whether the cookie should be marked as secure.  If true the cookie will only ever be sent over an SSL connection.
+        def secure=(value)
+          @secure = value
+        end
 
         # Tries to validate the session from information in the cookie
         def persist_by_cookie
