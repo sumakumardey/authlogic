@@ -82,6 +82,11 @@ module Authlogic
           end
           rw_config(:sign_cookie, value, false)
         end
+
+        def secure(value = nil)
+          rw_config(:secure, value, false)
+        end
+
         alias_method :sign_cookie=, :sign_cookie
         # See remember_me
         def remember_me?
