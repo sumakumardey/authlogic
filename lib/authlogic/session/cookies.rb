@@ -143,7 +143,7 @@ module Authlogic
         def save_cookie
           remember_me_until_value = "::#{remember_me_until}" if remember_me?
           cookie = {
-            :value => "#{record.persistence_token}::#{record.send(record.class.primary_key)}",
+            :value => "#{record.persistence_token}::#{record.send(record.class.primary_key)}#{remember_me_until_value}",
             :expires => remember_me_until,
             :domain => controller.cookie_domain,
             :secure => secure,
